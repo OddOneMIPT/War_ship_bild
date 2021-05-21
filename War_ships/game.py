@@ -5,8 +5,8 @@ print(Phrases.hello_world())
 
 user_map = Map()
 enemy_map = Map()
-user_map.make_ships('user')
-enemy_map.make_ships('enemy')
+user_map.make_ships('user', enemy_map)
+enemy_map.make_ships('enemy', enemy_map)
 
 user_ships = user_map.ships()
 enemy_ships = enemy_map.ships()

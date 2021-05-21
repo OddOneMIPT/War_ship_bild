@@ -46,5 +46,27 @@ class Phrases:
     def repeted(self):
         return "Вы уже ходили в эту клетку"
 
+    @classmethod
+    def deckhand_ship(self, deckhand):
+        if deckhand == 4:
+            return "Введите начало 4-х палубника"
+        if deckhand == 3:
+            return "Введите начало 3-х палубника"
+        if deckhand == 2:
+            return "Введите начало 2-х палубника"
+        if deckhand == 1:
+            return "Введите координаты 1-палубника"
+
+        return "Что-то пошло не так, с нумерацией количества палуб"
+
+
+    @classmethod
+    def blocked(self):
+        return "Эта позиция занята или вы пытаетесь играть не по правилам"
+
+    @classmethod
+    def direction(self):
+        return "Выберите направление"
+
         
 

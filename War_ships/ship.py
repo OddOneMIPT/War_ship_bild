@@ -13,12 +13,12 @@ class Ship:
 
 
     def make_busy_cells(self):
-        if self._direction == 'up':
+        if self._direction == 'down':
             for deck in range(-1, self.deckhand + 1):
                 for i in range(-1, 2):
                     self.busy_cells.append([self._start[0] + i, self._start[1] + deck])
         
-        if self._direction == 'down':
+        if self._direction == 'up':
             for deck in range(-1, self.deckhand + 1):
                 for i in range(-1, 2):
                     self.busy_cells.append([self._start[0] + i, self._start[1] - deck])
@@ -35,11 +35,11 @@ class Ship:
                     self.busy_cells.append([self._start[0] - deck, self._start[1] + i])
 
     def make_ship_cells(self):
-        if self._direction == 'up':
+        if self._direction == 'down':
             for deck in range(self.deckhand):
                     self.ship_cells.append([self._start[0], self._start[1] + deck])
         
-        if self._direction == 'down':
+        if self._direction == 'up':
             for deck in range(self.deckhand):
                     self.ship_cells.append([self._start[0], self._start[1] - deck])
 

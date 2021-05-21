@@ -17,20 +17,53 @@ class Map():
         self._ship_cells = []
         self._shooten_ship_cells = []
 
-    def make_ships(self, who):
+    def make_ships(self, who, enemy_map):
         if who == 'user':
             flag = self.check_hand()
         else: 
             flag = 0
         if flag == 1:
-            self.manual_input() #Реализую чуть позже
+            self.manual_input(enemy_map) #Реализую чуть позже
         else:
             self.random_input() # Попробуем реализовать для ускорения процесса
 
 
     #Реализовать!
-    def manual_input(self):
-        pass
+    def manual_input(self, enemy_map):
+        order_of_ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+        for deckhand in order_of_ships[:2]:
+            self.print_maps(self, enemy_map, flag=0)
+            print(Phrases.deckhand_ship(deckhand))
+            start_of_ship = self.check_user_input()
+            free_place = self.check_free(start_of_ship, deckhand)
+            while not free_place:
+                print(Phrases.blocked())
+                print(Phrases.deckhand_ship(deckhand))
+                start_of_ship = self.check_user_input()
+                free_place = self.check_free(start_of_ship, deckhand)
+            
+            print(Phrases.direction())
+            direction = free_place
+            print(*direction)
+            user_input = input().lower()
+            while user_input not in direction:
+                print("smth_wrong")
+                print(Phrases.direction())
+                direction = free_place
+                print(*direction)
+                user_input = input().lower()
+                
+
+            ship = Ship(start_of_ship, user_input, deckhand)
+            self._ships.append(ship)
+
+            for coords in ship.busy_cells:
+                self._busy_cells.append(coords)
+
+            for coords in ship.ship_cells:
+                self._ship_cells.append(coords)
+            
+
 
     def random_input(self):
         order_of_ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
@@ -79,7 +112,7 @@ class Map():
                 flag = False
                 break
         if flag:
-            free_place.append('up')
+            free_place.append('down')
 
         flag = True
         chek_down = [ [start_of_ship[0], start_of_ship[1] - i] for i in range(deckhand)]
@@ -88,7 +121,7 @@ class Map():
                 flag = False
                 break
         if flag:
-            free_place.append('down')
+            free_place.append('up')
 
         return free_place
         
@@ -126,6 +159,10 @@ class Map():
     
     def check_user_input(self):
         user_input = input().lower()
+        #emergency exit
+        if user_input == 'exit':
+            self.ships = []
+            
         flag = -1
         while flag != 0:
             try:
@@ -199,14 +236,19 @@ class Map():
             return
 
         string = [' ']
+        string.append('')
         for key in list(dictinary.keys())[:10]:
             string.append(key)
         string.append('      ')
+        string.append('')
         for key in list(dictinary.keys())[:10]:
             string.append(key)
         print(*string)
         for y in range(10):
-            string = []
+            if y != 9:
+                string = ['']
+            else:
+                string = []
             string.append(y + 1)
             for x in range(10):
                 if [x, y] in user_map._shooten_ship_cells:
@@ -218,6 +260,8 @@ class Map():
                 else:
                     string.append("0")
             string.append('    ')
+            if y != 9:
+                string.append('')
             string.append(y + 1)
             for x in range(10):
                 if [x, y] in enemy_map._shooten_ship_cells:
