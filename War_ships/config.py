@@ -1,0 +1,1 @@
+TG_TOKEN = "1806615241:AAG0qNkrg5nvbuBiK5enXrZFAnngw1rO30o"

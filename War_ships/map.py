@@ -42,16 +42,19 @@ class Map():
                 start_of_ship = self.check_user_input()
                 free_place = self.check_free(start_of_ship, deckhand)
             
-            print(Phrases.direction())
-            direction = free_place
-            print(*direction)
-            user_input = input().lower()
-            while user_input not in direction:
-                print("smth_wrong")
+            if deckhand != 1:
                 print(Phrases.direction())
                 direction = free_place
                 print(*direction)
                 user_input = input().lower()
+                while user_input not in direction:
+                    print("smth_wrong")
+                    print(Phrases.direction())
+                    direction = free_place
+                    print(*direction)
+                    user_input = input().lower()
+            else:
+                user_input = free_place[randint(0, len(free_place)-1)]
                 
 
             ship = Ship(start_of_ship, user_input, deckhand)
